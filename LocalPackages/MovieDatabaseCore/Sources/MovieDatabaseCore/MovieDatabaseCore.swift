@@ -39,7 +39,7 @@ public protocol CoreClientDefining {
 
 // MARK: - MovieDatabaseCore -
 
-public actor MovieDatabaseCore: @preconcurrency CoreClientDefining {
+public actor MovieDatabaseCore: CoreClientDefining {
 
     
     // MARK: - Properties
