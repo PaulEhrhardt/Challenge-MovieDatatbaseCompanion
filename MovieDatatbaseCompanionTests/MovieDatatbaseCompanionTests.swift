@@ -11,7 +11,6 @@ import Testing
 struct MovieDatatbaseCompanionTests {
 
     @Test func example() async throws {
-        ///
+        #expect(true)
     }
-
 }

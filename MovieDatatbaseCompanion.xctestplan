@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "67893BEC-E36B-4E59-AF72-EE89F8DF50A2",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:MovieDatatbaseCompanion.xcodeproj",
+        "identifier" : "E826709E2CF9C15300234015",
+        "name" : "MovieDatatbaseCompanionTests"
+      }
+    }
+  ],
+  "version" : 1
+}

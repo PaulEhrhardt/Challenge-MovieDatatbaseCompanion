@@ -7,20 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E89690872CFA133D009C2D4F /* MovieDatabaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = E89690862CFA133D009C2D4F /* MovieDatabaseCore */; };
+		E8005DB92CFA2E0D00C04672 /* MovieDatabaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = E8005DB82CFA2E0D00C04672 /* MovieDatabaseCore */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		E82670A02CF9C15300234015 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E82670852CF9C15000234015 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E826708C2CF9C15000234015;
-			remoteInfo = MovieDatatbaseCompanion;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		E8005DB62CFA2DD100C04672 /* MovieDatatbaseCompanion.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MovieDatatbaseCompanion.xctestplan; sourceTree = "<group>"; };
 		E826708D2CF9C15000234015 /* MovieDatatbaseCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDatatbaseCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E826709F2CF9C15300234015 /* MovieDatatbaseCompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieDatatbaseCompanionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -43,7 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E89690872CFA133D009C2D4F /* MovieDatabaseCore in Frameworks */,
+				E8005DB92CFA2E0D00C04672 /* MovieDatabaseCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +51,7 @@
 		E82670842CF9C15000234015 = {
 			isa = PBXGroup;
 			children = (
+				E8005DB62CFA2DD100C04672 /* MovieDatatbaseCompanion.xctestplan */,
 				E826708F2CF9C15000234015 /* MovieDatatbaseCompanion */,
 				E82670A22CF9C15300234015 /* MovieDatatbaseCompanionTests */,
 				E826708E2CF9C15000234015 /* Products */,
@@ -95,7 +87,7 @@
 			);
 			name = MovieDatatbaseCompanion;
 			packageProductDependencies = (
-				E89690862CFA133D009C2D4F /* MovieDatabaseCore */,
+				E8005DB82CFA2E0D00C04672 /* MovieDatabaseCore */,
 			);
 			productName = MovieDatatbaseCompanion;
 			productReference = E826708D2CF9C15000234015 /* MovieDatatbaseCompanion.app */;
@@ -112,7 +104,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E82670A12CF9C15300234015 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				E82670A22CF9C15300234015 /* MovieDatatbaseCompanionTests */,
@@ -153,7 +144,7 @@
 			mainGroup = E82670842CF9C15000234015;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				E82670D62CFA107E00234015 /* XCLocalSwiftPackageReference "LocalPackages/MovieDatabaseCore" */,
+				E8005DB72CFA2E0D00C04672 /* XCLocalSwiftPackageReference "LocalPackages/MovieDatabaseCore" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E826708E2CF9C15000234015 /* Products */;
@@ -199,14 +190,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E82670A12CF9C15300234015 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E826708C2CF9C15000234015 /* MovieDatatbaseCompanion */;
-			targetProxy = E82670A02CF9C15300234015 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E82670B12CF9C15300234015 /* Debug */ = {
@@ -457,14 +440,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		E82670D62CFA107E00234015 /* XCLocalSwiftPackageReference "LocalPackages/MovieDatabaseCore" */ = {
+		E8005DB72CFA2E0D00C04672 /* XCLocalSwiftPackageReference "LocalPackages/MovieDatabaseCore" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = LocalPackages/MovieDatabaseCore;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E89690862CFA133D009C2D4F /* MovieDatabaseCore */ = {
+		E8005DB82CFA2E0D00C04672 /* MovieDatabaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MovieDatabaseCore;
 		};
