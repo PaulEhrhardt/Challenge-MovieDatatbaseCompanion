@@ -53,15 +53,11 @@ actor HttpClient {
         guard let url = components.url else { throw Error.invalidURL }
         let request = createGetRequest(from: url)
         
-        if #available(macOS 12.0, *) {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard let response = response as? HTTPURLResponse, 200...300 ~= response.statusCode else { throw Error.badRequest }
-            //print(String(decoding: data, as: UTF8.self))
-            return try JSONDecoder().decode(MovieResult.self, from: data)
-        } else {
-            // Fallback to earlier versions for a ready-to-market application
-            throw Error.apiNotSupported
-        }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let response = response as? HTTPURLResponse, 200...300 ~= response.statusCode else { throw Error.badRequest }
+        //print(String(decoding: data, as: UTF8.self))
+        
+        return try JSONDecoder().decode(MovieResult.self, from: data)
     }
     
     
