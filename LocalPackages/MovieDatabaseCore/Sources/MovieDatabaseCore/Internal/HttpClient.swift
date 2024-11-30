@@ -58,7 +58,7 @@ internal actor HttpClient {
         let queryItems: [URLQueryItem] = [URLQueryItem(name: "language", value: language),
                                           URLQueryItem(name: "page", value: String(page))]
         let data = try await request(url: url, queryItems: queryItems)
-        
+
         return try JSONDecoder().decode(MovieResult.self, from: data)
     }
     
@@ -103,7 +103,14 @@ internal actor HttpClient {
         guard let url = components.url else { throw Error.invalidURL }
         let request = createGetRequest(from: url)
         let (data, response) = try await URLSession.shared.data(for: request)
-        guard let response = response as? HTTPURLResponse, 200...300 ~= response.statusCode else { throw Error.failedRequest }
+
+        guard let response = response as? HTTPURLResponse, 200...300 ~= response.statusCode else {
+#if DEBUG
+            print("Request URL:\n\(url)")
+            print("Response:\n\(String(data: data, encoding: .utf8))")
+#endif
+            throw Error.failedRequest
+        }
         
         return data
     }

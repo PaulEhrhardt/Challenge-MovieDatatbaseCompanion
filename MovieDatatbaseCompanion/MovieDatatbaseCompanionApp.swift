@@ -9,14 +9,18 @@ import SwiftUI
 import SwiftData
 import MovieDatabaseCore
 
+
+// MARK: - MovieDatatbaseCompanionApp -
+
 @main
 struct MovieDatatbaseCompanionApp: App {
+    
+    
+    // MARK: - Properties
+    
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
+        let schema = Schema([Item.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
@@ -24,6 +28,9 @@ struct MovieDatatbaseCompanionApp: App {
         }
     }()
 
+    
+    // MARK: - Lifecycle
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -62,6 +62,24 @@ public struct Movie: Codable, Sendable, Hashable, Identifiable {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
+    
+    public init(backdropPath: String?, posterPath: String?, id: Int, title: String, originalTitle: String, overview: String, mediaType: MediaType?, adult: Bool, originalLanguage: String, genreIDS: [Int], popularity: Double, releaseDate: String, video: Bool, voteAverage: Double, voteCount: Int) {
+        self.backdropPath = backdropPath
+        self.posterPath = posterPath
+        self.id = id
+        self.title = title
+        self.originalTitle = originalTitle
+        self.overview = overview
+        self.mediaType = mediaType
+        self.adult = adult
+        self.originalLanguage = originalLanguage
+        self.genreIDS = genreIDS
+        self.popularity = popularity
+        self.releaseDate = releaseDate
+        self.video = video
+        self.voteAverage = voteAverage
+        self.voteCount = voteCount
+    }
 }
 
 
@@ -101,6 +119,31 @@ public struct MovieDetail: Codable, Sendable {
         case status, tagline, title, video
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+    }
+    
+    public init(adult: Bool, backdropPath: String, budget: Int, genres: [Genre], homepage: String, id: Int, imdbID: String, originCountry: [String], originalLanguage: String, originalTitle: String, overview: String, popularity: Double, posterPath: String, releaseDate: String, revenue: Int, runtime: Int, status: String, tagline: String, title: String, video: Bool, voteAverage: Double, voteCount: Int) {
+        self.adult = adult
+        self.backdropPath = backdropPath
+        self.budget = budget
+        self.genres = genres
+        self.homepage = homepage
+        self.id = id
+        self.imdbID = imdbID
+        self.originCountry = originCountry
+        self.originalLanguage = originalLanguage
+        self.originalTitle = originalTitle
+        self.overview = overview
+        self.popularity = popularity
+        self.posterPath = posterPath
+        self.releaseDate = releaseDate
+        self.revenue = revenue
+        self.runtime = runtime
+        self.status = status
+        self.tagline = tagline
+        self.title = title
+        self.video = video
+        self.voteAverage = voteAverage
+        self.voteCount = voteCount
     }
 }
 
@@ -167,6 +210,24 @@ public struct Serie: Codable, Sendable, Hashable, Identifiable {
         case voteCount = "vote_count"
         case originCountry = "origin_country"
     }
+    
+    public init(backdropPath: String?, posterPath: String?, id: Int, name: String, originalName: String, overview: String, mediaType: MediaType?, adult: Bool, originalLanguage: String, genreIDS: [Int], popularity: Double, firstAirDate: String, voteAverage: Double, voteCount: Int, originCountry: [String]) {
+        self.backdropPath = backdropPath
+        self.posterPath = posterPath
+        self.id = id
+        self.name = name
+        self.originalName = originalName
+        self.overview = overview
+        self.mediaType = mediaType
+        self.adult = adult
+        self.originalLanguage = originalLanguage
+        self.genreIDS = genreIDS
+        self.popularity = popularity
+        self.firstAirDate = firstAirDate
+        self.voteAverage = voteAverage
+        self.voteCount = voteCount
+        self.originCountry = originCountry
+    }
 }
 
 
@@ -215,6 +276,34 @@ public struct SerieDetail: Codable, Sendable {
         case status, tagline, type
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+    }
+    
+    public init(adult: Bool, backdropPath: String, episodeRunTime: [Int], firstAirDate: String, genres: [Genre], homepage: String, id: Int, inProduction: Bool, languages: [String], lastAirDate: String, name: String, numberOfEpisodes: Int, numberOfSeasons: Int, originCountry: [String], originalLanguage: String, originalName: String, overview: String, popularity: Double, posterPath: String, seasons: [Season], status: String, tagline: String, type: String, voteAverage: Double, voteCount: Int) {
+        self.adult = adult
+        self.backdropPath = backdropPath
+        self.episodeRunTime = episodeRunTime
+        self.firstAirDate = firstAirDate
+        self.genres = genres
+        self.homepage = homepage
+        self.id = id
+        self.inProduction = inProduction
+        self.languages = languages
+        self.lastAirDate = lastAirDate
+        self.name = name
+        self.numberOfEpisodes = numberOfEpisodes
+        self.numberOfSeasons = numberOfSeasons
+        self.originCountry = originCountry
+        self.originalLanguage = originalLanguage
+        self.originalName = originalName
+        self.overview = overview
+        self.popularity = popularity
+        self.posterPath = posterPath
+        self.seasons = seasons
+        self.status = status
+        self.tagline = tagline
+        self.type = type
+        self.voteAverage = voteAverage
+        self.voteCount = voteCount
     }
 }
 
