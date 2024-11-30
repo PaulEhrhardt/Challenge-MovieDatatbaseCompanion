@@ -1,0 +1,28 @@
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+  - Pods
+  - Framework
+  - checkouts 
+disabled_rules: # rule identifiers to exclude from running
+  - line_length
+  - trailing_whitespace
+  - file_length
+  - type_body_length
+  - nesting
+  - opening_brace
+  - multiple_closures_with_trailing_closure
+  - type_name
+  - trailing_comma
+  - todo
+cyclomatic_complexity: 15
+function_parameter_count: 6
+vertical_whitespace:
+  max_empty_lines: 2
+identifier_name:
+  max_length:
+    warning: 50
+    error: 55
+  min_length: 2
+large_tuple:
+  warning: 6
+  error: 8

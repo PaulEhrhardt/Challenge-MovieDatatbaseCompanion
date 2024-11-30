@@ -12,7 +12,6 @@ let apiKey: String = {
     let secretFileName = "apikey.secret"
     let fullPath = NSHomeDirectory() + pathToProject + secretFileName
     let fileContent = try? String(contentsOfFile: fullPath, encoding: .utf8).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        
     
     return fileContent ?? ""
 }()
