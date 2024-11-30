@@ -1,3 +1,10 @@
+//
+//  MovieDatabaseCoreTests.swift
+//  MovieDatabaseCore
+//
+//  Created by Paul Ehrhardt on 29/11/24.
+//
+
 import Testing
 @testable import MovieDatabaseCore
 import Foundation

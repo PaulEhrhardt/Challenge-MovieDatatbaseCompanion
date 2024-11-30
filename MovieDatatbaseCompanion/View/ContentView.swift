@@ -9,33 +9,37 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    
+    
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-
+    @State var selection: MenuItem?
+    
+    
     var body: some View {
         NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+            List(selection: $selection) {
+                Section {
+                    ForEach(MenuItem.menuItems, id: \.self) { item in
+                        NavigationLink(value: item) {
+                            Label(item.title, systemImage: item.symbol)
+                        }
                     }
                 }
             }
         } detail: {
-            Text("Select an item")
+            if let selection = selection {
+                NavigationStack {
+                    switch selection.type {
+                    case .trending:
+                        TrendingView()
+                    case .search:
+                        SearchView()
+                    }
+                }
+            } else {
+                Text("Please select a menu item.")
+            }
         }
     }
 

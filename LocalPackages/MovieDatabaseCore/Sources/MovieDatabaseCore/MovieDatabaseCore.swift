@@ -1,5 +1,9 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+//
+//  MovieDatabaseCore.swift
+//  MovieDatabaseCore
+//
+//  Created by Paul Ehrhardt on 29/11/24.
+//
 
 import Foundation
 
