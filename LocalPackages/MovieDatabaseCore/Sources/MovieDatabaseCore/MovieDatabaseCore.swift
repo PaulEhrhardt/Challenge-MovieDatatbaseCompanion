@@ -18,22 +18,22 @@ public protocol CoreClientDefining {
     func registerApiKey(key: String) async
     
     // https://developer.themoviedb.org/reference/trending-movies
-    func fetchTrendingMovies(page: Int) async throws -> MovieResult
+    func fetchTrendingMovies(page: Int, language: String) async throws -> MovieResult
     
     // https://developer.themoviedb.org/reference/movie-details
-    func fetchMovieDetails(id: Int) async throws -> MovieDetail
+    func fetchMovieDetails(id: Int, language: String) async throws -> MovieDetail
     
     // https://developer.themoviedb.org/reference/tv-series-details
-    func fetchSeriesDetails(id: Int) async throws -> SerieDetail
+    func fetchSeriesDetails(id: Int, language: String) async throws -> SerieDetail
     
     // https://developer.themoviedb.org/reference/search-movie
-    func searchForMovies(query: String) async throws -> MovieResult
+    func searchForMovies(query: String, page: Int, language: String) async throws -> MovieResult
     
     // https://developer.themoviedb.org/reference/search-tv
-    func searchForSeries(query: String) async throws -> SerieResult
+    func searchForSeries(query: String, page: Int, language: String) async throws -> SerieResult
     
     // https://developer.themoviedb.org/docs/image-basics
-    func fetchImageData(size: ImageSize, path: String) async throws -> Data
+    func fetchImageData(size: ImageSize, path: String, language: String) async throws -> Data
 }
 
 
@@ -61,28 +61,28 @@ public actor MovieDatabaseCore: CoreClientDefining {
         await client.registerApiKey(key: key)
     }
     
-    public func fetchTrendingMovies(page: Int) async throws -> MovieResult {
-        try await client.fetchTrendingMovies(page: page)
+    public func fetchTrendingMovies(page: Int, language: String = "en-US") async throws -> MovieResult {
+        try await client.fetchTrendingMovies(page: page, language: language)
     }
     
-    public func fetchMovieDetails(id: Int) async throws -> MovieDetail {
-        fatalError("Not Implemented")
+    public func fetchMovieDetails(id: Int, language: String = "en-US") async throws -> MovieDetail {
+        try await client.fetchDetails(returnType: MovieDetail.self, id: id, language: language)
     }
     
-    public func fetchSeriesDetails(id: Int) async throws -> SerieDetail {
-        fatalError("Not Implemented")
+    public func fetchSeriesDetails(id: Int, language: String = "en-US") async throws -> SerieDetail {
+        try await client.fetchDetails(returnType: SerieDetail.self, id: id, language: language)
     }
     
-    public func searchForMovies(query: String) async throws -> MovieResult {
-        fatalError("Not Implemented")
+    public func searchForMovies(query: String, page: Int, language: String = "en-US") async throws -> MovieResult {
+        try await client.searchFilms(returnType: MovieResult.self, query: query, page: page, language: language)
     }
     
-    public func searchForSeries(query: String) async throws -> SerieResult {
-        fatalError("Not Implemented")
+    public func searchForSeries(query: String, page: Int, language: String = "en-US") async throws -> SerieResult {
+        try await client.searchFilms(returnType: SerieResult.self, query: query, page: page, language: language)
     }
     
-    public func fetchImageData(size: ImageSize, path: String) async throws -> Data {
-        fatalError("Not Implemented")
+    public func fetchImageData(size: ImageSize, path: String, language: String = "en-US") async throws -> Data {
+        try await client.fetchImageData(size: size, path: path, language: language)
     }
     
     
@@ -90,5 +90,5 @@ public actor MovieDatabaseCore: CoreClientDefining {
     
     private let client = HttpClient()
     
-    private init() {}
+    internal init() {}
 }

@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Error -
 
 public enum Error: Swift.Error {
-    case invalidParam, invalidURL, apiNotSupported, dataParsing, badRequest
+    case invalidURL, failedRequest
 }
 
 
@@ -33,10 +33,10 @@ public struct MovieResult: Codable, Sendable {
 // MARK: - Movie -
 
 public struct Movie: Codable, Sendable, Hashable, Identifiable {
-    public let backdropPath: String?
+    public let backdropPath, posterPath: String?
     public let id: Int
-    public let title, originalTitle, overview, posterPath: String
-    public let mediaType: MediaType
+    public let title, originalTitle, overview: String
+    public let mediaType: MediaType?
     public let adult: Bool
     public let originalLanguage: String
     public let genreIDS: [Int]
@@ -139,10 +139,10 @@ public struct SerieResult: Codable, Sendable {
 // MARK: - Serie -
 
 public struct Serie: Codable, Sendable, Hashable, Identifiable {
-    public let backdropPath: String?
+    public let backdropPath, posterPath: String?
     public let id: Int
-    public let name, originalName, overview, posterPath: String
-    public let mediaType: MediaType
+    public let name, originalName, overview: String
+    public let mediaType: MediaType?
     public let adult: Bool
     public let originalLanguage: String
     public let genreIDS: [Int]
