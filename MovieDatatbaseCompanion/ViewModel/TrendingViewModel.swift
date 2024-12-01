@@ -29,7 +29,8 @@ class TrendingViewModel {
     
     @ObservationIgnored var page = 1
     @ObservationIgnored let movieDatabaseCore = MovieDatabaseCore.shared
-    
+
+
     // MARK: - API
     
     func loadTrendingMovies() async {
