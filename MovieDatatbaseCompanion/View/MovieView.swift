@@ -25,20 +25,24 @@ struct MovieView: View {
     // MARK: - Lifecycle
     
     var body: some View {
-        VStack {
-            Image(uiImage: image ?? UIImage(resource: .placeholder))
-                .resizable()
-            Text(movie.title)
-                .font(.title)
-            Text(movie.overview)
-                .font(.body)
-        }
-        .frame(minWidth: size.width, minHeight: size.height)
-        .background(Color(UIColor.systemGray6))
-        .task {
-            // TODO: adaptive size
-            if let backdropPath = movie.backdropPath, let data = try? await MovieDatabaseCore.shared.fetchImageData(size: .w154, path: backdropPath) {
-                image = UIImage(data: data)
+        NavigationLink {
+            DetailsView(movieId: movie.id)
+        } label: {
+            VStack {
+                Image(uiImage: image ?? UIImage(resource: .placeholder))
+                    .resizable()
+                Text(movie.title)
+                    .font(.title)
+                Text(movie.overview)
+                    .font(.body)
+            }
+            .frame(minWidth: size.width, minHeight: size.height)
+            .background(Color(UIColor.systemGray6))
+            .task {
+                // TODO: adaptive size
+                if let backdropPath = movie.backdropPath, let data = try? await MovieDatabaseCore.shared.fetchImageData(size: .w154, path: backdropPath) {
+                    image = UIImage(data: data)
+                }
             }
         }
     }
