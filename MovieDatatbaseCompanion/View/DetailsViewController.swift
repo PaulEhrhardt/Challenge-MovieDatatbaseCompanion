@@ -17,6 +17,7 @@ final class DetailsViewController: UIViewController {
     // MARK: - Proerties
 
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentStackView: UIStackView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -32,6 +33,12 @@ final class DetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.layer.cornerRadius = .cornerSize
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor.systemGray2.cgColor
+
+        view.backgroundColor = .systemGray6
     }
 
 

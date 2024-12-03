@@ -17,12 +17,21 @@ struct TrendingView: View {
     
     @State var viewModel = TrendingViewModel()
 
-    
+    let columns = [
+        GridItem(.adaptive(minimum: 300))
+    ]
+
+//    let columns = [
+//        GridItem(.flexible(minimum: 200)),
+//        GridItem(.flexible(minimum: 200)),
+//        GridItem(.flexible(minimum: 200)),
+//    ]
+
     // MARK: - Lifecycle
     
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 16) {
+            LazyVGrid(columns: columns, spacing: .bigSpace) {
                 ForEach(viewModel.movies, id: \.self) { movie in
                     MovieView(movie: movie)
                 }
@@ -38,6 +47,8 @@ struct TrendingView: View {
                         }
                 }
             }
+           // .padding(.horizontal, .itemSpace)
+            .padding(.top, .bigSpace)
         }
     }
 }

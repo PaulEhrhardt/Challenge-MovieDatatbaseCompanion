@@ -19,21 +19,25 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     
-    @State var selection: MenuItem?
+    @State var selection: MenuItem? = MenuItem.menuItems.first
     
     
     // MARK: - Lifecycle
     
     var body: some View {
         NavigationSplitView {
-            List(selection: $selection) {
-                Section {
-                    ForEach(MenuItem.menuItems, id: \.self) { item in
-                        NavigationLink(value: item) {
-                            Label(item.title, systemImage: item.symbol)
+            VStack(spacing: .bigSpace) {
+                List(selection: $selection) {
+                    Section {
+                        ForEach(MenuItem.menuItems, id: \.self) { item in
+                            NavigationLink(value: item) {
+                                Label(item.title, systemImage: item.symbol)
+                            }
                         }
                     }
                 }
+                Image(.logo)
+                    .resizable()
             }
         } detail: {
             if let selection = selection {
@@ -46,6 +50,8 @@ struct ContentView: View {
                     }
                 }
                 .navigationTitle(selection.title)
+                .toolbarTitleDisplayMode(.large)
+                //.toolbarColorScheme(.red, for: .navigationBar)
             } else {
                 Text("Please select a menu item.")
             }

@@ -16,26 +16,31 @@ struct SearchView: View {
     // MARK: - Properties
 
     @StateObject var viewModel = SearchViewModel()
+    
+    let pickerOptions = [SearchViewModel.SearchType.movies.description,
+                         SearchViewModel.SearchType.series.description]
 
     
     // MARK: - Lifecycle
     
     var body: some View {
         Picker("", selection: $viewModel.searchType) {
-            Text(SearchViewModel.SearchType.movies.rawValue)
-            Text(SearchViewModel.SearchType.series.rawValue)
+            ForEach(pickerOptions, id: \.self) {
+                Text($0)
+            }
         }
         .pickerStyle(.segmented)
+        .tint(.brandPrimary)
+        .padding(.itemSpace)
 
         ScrollView {
-            LazyVStack(spacing: 16) {
+            LazyVStack(spacing: .itemSpace) {
                 switch viewModel.state {
                 case .initial:
-                    Text("Search for movies or series.")
+                    Text("Search for \(viewModel.searchType.description).")
+                        .padding(.contentSpace)
                 case .loading:
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .scaleEffect(3.0)
+                    LoadingView()
                 case .movieResults(let items):
                     ForEach(items, id: \.self) { movie in
                         MovieView(movie: movie)
@@ -46,6 +51,7 @@ struct SearchView: View {
                     }
                 case .noResults:
                     Text("No results. Try different search input.")
+                        .padding(.contentSpace)
                 }
             }
         }

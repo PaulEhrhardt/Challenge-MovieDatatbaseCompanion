@@ -23,7 +23,7 @@ struct DetailsView: UIViewControllerRepresentable {
     // MARK: - Properties
 
     let movieId: Int
-    @State var movie: MovieDetail? = nil
+    @State var movie: MovieDetail?
 
 
     // MARK: - Lifecycle
@@ -39,7 +39,7 @@ struct DetailsView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: DetailsViewController, context: Context) {
         uiViewController.scrollViewVisibility(shouldShow: movie != nil)
-
+        uiViewController.scrollViewVisibility(shouldShow: true)
         uiViewController.imageView.image = UIImage(resource: .placeholder) // TODO: load
         uiViewController.titleLabel.text = movie?.title ?? ""
         uiViewController.overviewLabel.text = movie?.overview ?? ""
@@ -66,4 +66,5 @@ struct DetailsView: UIViewControllerRepresentable {
 
 #Preview {
     DetailsView(movieId: 99)
+        .padding()
 }

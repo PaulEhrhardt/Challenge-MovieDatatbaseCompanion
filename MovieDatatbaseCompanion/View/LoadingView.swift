@@ -11,12 +11,7 @@ import SwiftUI
 // MARK: - LoadingView -
 
 struct LoadingView: View {
-    
-    
-    // MARK: - Lifecycle
-    
-    let size: CGSize = CGSize(width: 300, height: 300)
-    
+
     
     // MARK: - Lifecycle
     
@@ -24,10 +19,10 @@ struct LoadingView: View {
         VStack {
             ProgressView()
                 .progressViewStyle(.circular)
-                .scaleEffect(3.0)
+                .scaleEffect(2.0)
+                .padding(.vertical, .bigSpace)
         }
-        .frame(minWidth: size.width, minHeight: size.height)
-        .background(Color(UIColor.systemGray6))
+        .frame(minWidth: 300)
     }
 }
 
