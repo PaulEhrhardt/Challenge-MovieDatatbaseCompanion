@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit.UIDevice
 import MovieDatabaseCore
 
 
@@ -15,11 +16,13 @@ struct MovieView: View {
     
     
     // MARK: - Properties
-    
+
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    @State var image: UIImage?
+
     let movie: Movie
     let size: CGSize = CGSize(width: 300, height: 300)
-    
-    @State var image: UIImage?
     
     
     // MARK: - Lifecycle
@@ -39,10 +42,21 @@ struct MovieView: View {
             .frame(minWidth: size.width, minHeight: size.height)
             .background(Color(UIColor.systemGray6))
             .task {
-                // TODO: adaptive size
-                if let backdropPath = movie.backdropPath, let data = try? await MovieDatabaseCore.shared.fetchImageData(size: .w154, path: backdropPath) {
-                    image = UIImage(data: data)
-                }
+                guard let backdropPath = movie.backdropPath else { return }
+
+                // load low-res preview image
+                var imageSize = ImageSize.previewSize
+                guard let previewData = try? await MovieDatabaseCore.shared.fetchImageData(size: imageSize, path: backdropPath) else { return }
+                image = UIImage(data: previewData)
+
+                // load hi-res image based on current size class
+                imageSize = ImageSize.optimalSize(for: horizontalSizeClass ?? .compact)
+                guard let imageData = try? await MovieDatabaseCore.shared.fetchImageData(size: imageSize, path: backdropPath) else { return }
+                image = UIImage(data: imageData)
+
+#if DEBUG
+                print("Loaded image for '\(movie.title)' with size of: \(imageSize)")
+#endif
             }
         }
     }
