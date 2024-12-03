@@ -19,32 +19,46 @@ class TrendingViewModel {
     // MARK: - Types
     
     enum State {
-        case initial, loading, nextPage
+        case initial, loading, nextPage, failure
     }
-    
+
+
     // MARK: - Properties
     
-    var state: State = .initial
-    var movies: [Movie] = []
-    
-    @ObservationIgnored var page = 1
+    @MainActor var state: State = .initial
+    @MainActor var movies: [Movie] = []
+
+    @ObservationIgnored @MainActor var page = 1
     @ObservationIgnored let movieDatabaseCore = MovieDatabaseCore.shared
 
 
     // MARK: - API
-    
+
     func loadTrendingMovies() async {
-        print("Loading page: \(page)")
-        state = .loading
-        do {
-            let result = try await movieDatabaseCore.fetchTrendingMovies(page: page)
-            print(result)
-            guard !result.results.isEmpty else { return }
-            page += 1
-            movies.append(contentsOf: result.results)
-            state = .nextPage
-        } catch {
-            print(error)
+        setState(.loading)
+
+        Task(priority: .userInitiated) {
+            do {
+                let result = try await movieDatabaseCore.fetchTrendingMovies(page: page)
+                guard !result.results.isEmpty else { return }
+                Task { @MainActor in
+                    page += 1
+                    movies.append(contentsOf: result.results)
+                    state = .nextPage
+                }
+            } catch {
+                print(error)
+                setState(.failure)
+            }
+        }
+    }
+
+
+    // MARK: - Innternal
+
+    private func setState(_ newState: State) {
+        Task { @MainActor in
+            state = newState
         }
     }
 }

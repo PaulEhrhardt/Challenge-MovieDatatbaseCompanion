@@ -20,7 +20,7 @@ struct ContentView: View {
     @Query private var items: [Item]
     
     @State var selection: MenuItem? = MenuItem.menuItems.first
-    
+
     
     // MARK: - Lifecycle
     
@@ -35,10 +35,19 @@ struct ContentView: View {
                             }
                         }
                     }
+                    .listRowBackground(Color(uiColor: UIColor.systemGroupedBackground))
                 }
+                .background(Color(uiColor: UIColor.systemBackground))
+                .scrollContentBackground(.hidden)
+
                 Image(.logo)
                     .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.bigSpace)
+
+                Spacer()
             }
+            .background(Color(uiColor: UIColor.systemBackground))
         } detail: {
             if let selection = selection {
                 NavigationStack {
@@ -51,7 +60,6 @@ struct ContentView: View {
                 }
                 .navigationTitle(selection.title)
                 .toolbarTitleDisplayMode(.large)
-                //.toolbarColorScheme(.red, for: .navigationBar)
             } else {
                 Text("Please select a menu item.")
             }

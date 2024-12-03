@@ -1,5 +1,5 @@
 //
-//  MovieView.swift
+//  FilmView.swift
 //  MovieDatatbaseCompanion
 //
 //  Created by Paul Ehrhardt on 30/11/24.
@@ -10,10 +10,10 @@ import UIKit.UIDevice
 import MovieDatabaseCore
 
 
-// MARK: - MovieView -
+// MARK: - FilmView -
 
-struct MovieView: View {
-    
+struct FilmView: View {
+
     
     // MARK: - Properties
 
@@ -21,27 +21,27 @@ struct MovieView: View {
 
     @State var image: UIImage?
 
-    let movie: Movie
-    
+    let item: FilmItem
+
     
     // MARK: - Lifecycle
     
     var body: some View {
         NavigationLink {
-            DetailsView(movieId: movie.id)
+            DetailsView(item: item)
         } label: {
             VStack(spacing: .standardSpace) {
                 Image(uiImage: image ?? UIImage(resource: .placeholder))
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .clipped()
-                Text(movie.title)
+                Text(item.title)
                     .font(.title)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color(UIColor.label))
                     .padding(.horizontal, .standardSpace)
-                Text(movie.overview)
+                Text(item.overview)
                     .font(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color(UIColor.secondaryLabel))
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, .standardSpace)
                     .padding(.bottom, .standardSpace)
@@ -54,20 +54,11 @@ struct MovieView: View {
                 )
             .clipShape(RoundedRectangle(cornerRadius: .cornerSize))
             .task {
-                guard let backdropPath = movie.backdropPath else { return }
-
                 // load low-res preview image
-                var imageSize = ImageSize.previewSize
-                guard let previewData = try? await MovieDatabaseCore.shared.fetchImageData(size: imageSize, path: backdropPath) else { return }
-                image = UIImage(data: previewData)
+                image = await previewImage(for: item.imagePath)
 
                 // load hi-res image based on current size class
-                imageSize = ImageSize.optimalSize(for: horizontalSizeClass ?? .compact)
-                guard let imageData = try? await MovieDatabaseCore.shared.fetchImageData(size: imageSize, path: backdropPath) else { return }
-                image = UIImage(data: imageData)
-#if DEBUG
-                print("Loaded image for '\(movie.title)' with size of: \(imageSize)")
-#endif
+                image = await optimalImage(for: item.imagePath, sizeClass: horizontalSizeClass ?? .compact)
             }
         }
     }
@@ -77,5 +68,5 @@ struct MovieView: View {
 // MARK: - Preview -
 
 #Preview {
-    MovieView(movie: PreviewModels.starWars)
+    FilmView(item: PreviewModels.starWars.asFilmItem())
 }

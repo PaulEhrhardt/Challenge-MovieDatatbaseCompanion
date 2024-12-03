@@ -16,9 +16,12 @@ struct SearchView: View {
     // MARK: - Properties
 
     @StateObject var viewModel = SearchViewModel()
-    
+
     let pickerOptions = [SearchViewModel.SearchType.movies.description,
                          SearchViewModel.SearchType.series.description]
+    let columns = [
+        GridItem(.adaptive(minimum: 300))
+    ]
 
     
     // MARK: - Lifecycle
@@ -30,11 +33,13 @@ struct SearchView: View {
             }
         }
         .pickerStyle(.segmented)
-        .tint(.brandPrimary)
         .padding(.itemSpace)
+        .onChange(of: viewModel.searchType) { _, _ in
+            viewModel.setState(.initial)
+        }
 
         ScrollView {
-            LazyVStack(spacing: .itemSpace) {
+            LazyVGrid(columns: columns, spacing: .bigSpace) {
                 switch viewModel.state {
                 case .initial:
                     Text("Search for \(viewModel.searchType.description).")
@@ -43,11 +48,11 @@ struct SearchView: View {
                     LoadingView()
                 case .movieResults(let items):
                     ForEach(items, id: \.self) { movie in
-                        MovieView(movie: movie)
+                        FilmView(item: movie.asFilmItem())
                     }
                 case .seriesResults(let items):
                     ForEach(items, id: \.self) { series in
-                        Text(series.name)
+                        FilmView(item: series.asFilmItem())
                     }
                 case .noResults:
                     Text("No results. Try different search input.")

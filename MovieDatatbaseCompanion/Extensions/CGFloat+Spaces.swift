@@ -7,6 +7,9 @@
 
 import Foundation
 
+
+// MARK: - CGFloat: Convenience spacings for layout -
+
 extension CGFloat {
 
     static let cornerSize: CGFloat = 8

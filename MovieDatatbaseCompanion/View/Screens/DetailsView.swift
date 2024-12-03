@@ -10,9 +10,28 @@ import UIKit
 import MovieDatabaseCore
 
 
-// MARK: - DetailsView
+// MARK: - DetailsView -
 
-struct DetailsView: UIViewControllerRepresentable {
+struct DetailsView: View {
+
+    let item: FilmItem
+
+    var body: some View {
+        if item.isSeries {
+            Text("Sorry, details are currently only available for movies.")
+        } else {
+            DetailsViewRepresentable(movieId: item.id)
+                .background(Color(UIColor.systemGray6).ignoresSafeArea(.all))
+                .clipShape(RoundedRectangle(cornerRadius: .cornerSize))
+                .padding(.horizontal, .itemSpace)
+        }
+    }
+}
+
+
+// MARK: - DetailsViewRepresentable -
+
+struct DetailsViewRepresentable: UIViewControllerRepresentable {
 
 
     // MARK: - Types
@@ -22,8 +41,11 @@ struct DetailsView: UIViewControllerRepresentable {
 
     // MARK: - Properties
 
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
     let movieId: Int
     @State var movie: MovieDetail?
+    @State var image: UIImage?
 
 
     // MARK: - Lifecycle
@@ -39,8 +61,8 @@ struct DetailsView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: DetailsViewController, context: Context) {
         uiViewController.scrollViewVisibility(shouldShow: movie != nil)
-        uiViewController.scrollViewVisibility(shouldShow: true)
-        uiViewController.imageView.image = UIImage(resource: .placeholder) // TODO: load
+
+        uiViewController.imageView.image = image ?? UIImage(resource: .placeholder)
         uiViewController.titleLabel.text = movie?.title ?? ""
         uiViewController.overviewLabel.text = movie?.overview ?? ""
         uiViewController.originTitleLabel.text = movie?.originalTitle ?? ""
@@ -57,6 +79,8 @@ struct DetailsView: UIViewControllerRepresentable {
         // For simplicity we do not react on errors here
         Task {
             movie = try await MovieDatabaseCore.shared.fetchMovieDetails(id: movieId)
+            image = await previewImage(for: movie?.backdropPath)
+            image = await optimalImage(for: movie?.backdropPath, sizeClass: horizontalSizeClass ?? .compact)
         }
     }
 }
@@ -65,6 +89,5 @@ struct DetailsView: UIViewControllerRepresentable {
 // MARK: - Preview -
 
 #Preview {
-    DetailsView(movieId: 99)
-        .padding()
+    DetailsView(item: PreviewModels.starWars.asFilmItem())
 }

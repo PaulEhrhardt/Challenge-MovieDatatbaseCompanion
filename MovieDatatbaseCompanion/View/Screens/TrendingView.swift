@@ -21,11 +21,6 @@ struct TrendingView: View {
         GridItem(.adaptive(minimum: 300))
     ]
 
-//    let columns = [
-//        GridItem(.flexible(minimum: 200)),
-//        GridItem(.flexible(minimum: 200)),
-//        GridItem(.flexible(minimum: 200)),
-//    ]
 
     // MARK: - Lifecycle
     
@@ -33,7 +28,7 @@ struct TrendingView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: .bigSpace) {
                 ForEach(viewModel.movies, id: \.self) { movie in
-                    MovieView(movie: movie)
+                    FilmView(item: movie.asFilmItem())
                 }
                 switch viewModel.state {
                 case .loading:
@@ -45,9 +40,10 @@ struct TrendingView: View {
                                 await viewModel.loadTrendingMovies()
                             }
                         }
+                case .failure:
+                    Text("Something went wrong, please try again.")
                 }
             }
-           // .padding(.horizontal, .itemSpace)
             .padding(.top, .bigSpace)
         }
     }

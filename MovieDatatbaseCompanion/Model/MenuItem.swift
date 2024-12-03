@@ -7,6 +7,9 @@
 
 import Foundation
 
+
+// MARK: - MenuItem -
+
 struct MenuItem: Hashable {
     
     enum `Type` {
