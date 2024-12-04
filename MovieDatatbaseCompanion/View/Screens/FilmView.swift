@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit.UIDevice
 import MovieDatabaseCore
+import PINCache
 
 
 // MARK: - FilmView -
@@ -54,11 +55,22 @@ struct FilmView: View {
                 )
             .clipShape(RoundedRectangle(cornerRadius: .cornerSize))
             .task {
-                // load low-res preview image
-                image = await previewImage(for: item.imagePath)
+                guard let path = item.imagePath else { return }
 
-                // load hi-res image based on current size class
-                image = await optimalImage(for: item.imagePath, sizeClass: horizontalSizeClass ?? .compact)
+                if await hasCacheEntry(for: path) {
+                    PINCache.shared.object(forKeyAsync: path) { _, _, obj in
+                        image = obj as? UIImage
+                    }
+                } else {
+                    // load low-res preview image
+                    image = await previewImage(for: path)
+
+                    // load hi-res image based on current size class
+                    image = await optimalImage(for: path, sizeClass: horizontalSizeClass ?? .compact)
+
+                    // add the image to cache
+                    await addToCache(image: image, for: path)
+                }
             }
         }
     }

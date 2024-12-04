@@ -1,5 +1,5 @@
 //
-//  ImageSize+Resolutions.swift
+//  View+ImageCache+Resolutions.swift
 //  MovieDatatbaseCompanion
 //
 //  Created by Paul Ehrhardt on 3/12/24.
@@ -7,11 +7,13 @@
 
 import MovieDatabaseCore
 import SwiftUI
+import PINCache
 
 
 // MARK: - Image loading helpers -
 
 extension ImageSize {
+
     static var previewSize: ImageSize {
         .w154
     }
@@ -19,15 +21,23 @@ extension ImageSize {
 
 
 extension View {
-    func previewImage(for path: String?) async -> UIImage? {
-        guard let path = path else { return nil }
+
+    func addToCache(image: UIImage?, for path: String) async {
+        guard let image = image else { return }
+        await PINCache.shared.setObjectAsync(image, forKey: path)
+    }
+
+    func hasCacheEntry(for path: String) async -> Bool {
+        await PINCache.shared.containsObject(forKeyAsync: path)
+    }
+
+    func previewImage(for path: String) async -> UIImage? {
         let imageSize = ImageSize.previewSize
         guard let previewData = try? await MovieDatabaseCore.shared.fetchImageData(size: imageSize, path: path) else { return nil }
         return UIImage(data: previewData)
     }
 
-    func optimalImage(for path: String?, sizeClass: UserInterfaceSizeClass) async -> UIImage? {
-        guard let path = path else { return nil }
+    func optimalImage(for path: String, sizeClass: UserInterfaceSizeClass) async -> UIImage? {
         let imageSize = optimalSize(for: sizeClass)
         guard let imageData = try? await MovieDatabaseCore.shared.fetchImageData(size: imageSize, path: path) else { return nil }
         return UIImage(data: imageData)

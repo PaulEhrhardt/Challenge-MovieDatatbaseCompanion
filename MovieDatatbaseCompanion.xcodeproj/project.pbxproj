@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		524DF8912D00915100A46FB8 /* PINCache in Frameworks */ = {isa = PBXBuildFile; productRef = 524DF8902D00915100A46FB8 /* PINCache */; };
 		E8005DB92CFA2E0D00C04672 /* MovieDatabaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = E8005DB82CFA2E0D00C04672 /* MovieDatabaseCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		524DF8922D00A25D00A46FB8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E8005DB62CFA2DD100C04672 /* MovieDatatbaseCompanion.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MovieDatatbaseCompanion.xctestplan; sourceTree = "<group>"; };
 		E826708D2CF9C15000234015 /* MovieDatatbaseCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDatatbaseCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E826709F2CF9C15300234015 /* MovieDatatbaseCompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieDatatbaseCompanionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,6 +37,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8005DB92CFA2E0D00C04672 /* MovieDatabaseCore in Frameworks */,
+				524DF8912D00915100A46FB8 /* PINCache in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +54,7 @@
 		E82670842CF9C15000234015 = {
 			isa = PBXGroup;
 			children = (
+				524DF8922D00A25D00A46FB8 /* README.md */,
 				E8005DB62CFA2DD100C04672 /* MovieDatatbaseCompanion.xctestplan */,
 				E826708F2CF9C15000234015 /* MovieDatatbaseCompanion */,
 				E82670A22CF9C15300234015 /* MovieDatatbaseCompanionTests */,
@@ -89,6 +93,7 @@
 			name = MovieDatatbaseCompanion;
 			packageProductDependencies = (
 				E8005DB82CFA2E0D00C04672 /* MovieDatabaseCore */,
+				524DF8902D00915100A46FB8 /* PINCache */,
 			);
 			productName = MovieDatatbaseCompanion;
 			productReference = E826708D2CF9C15000234015 /* MovieDatatbaseCompanion.app */;
@@ -146,6 +151,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				E8005DB72CFA2E0D00C04672 /* XCLocalSwiftPackageReference "LocalPackages/MovieDatabaseCore" */,
+				524DF88F2D00915100A46FB8 /* XCRemoteSwiftPackageReference "PINCache" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E826708E2CF9C15000234015 /* Products */;
@@ -472,7 +478,23 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		524DF88F2D00915100A46FB8 /* XCRemoteSwiftPackageReference "PINCache" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pinterest/PINCache";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		524DF8902D00915100A46FB8 /* PINCache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 524DF88F2D00915100A46FB8 /* XCRemoteSwiftPackageReference "PINCache" */;
+			productName = PINCache;
+		};
 		E8005DB82CFA2E0D00C04672 /* MovieDatabaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MovieDatabaseCore;

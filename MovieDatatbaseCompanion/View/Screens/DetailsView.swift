@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 import MovieDatabaseCore
+import PINCache
 
 
 // MARK: - DetailsView -
@@ -79,8 +80,16 @@ struct DetailsViewRepresentable: UIViewControllerRepresentable {
         // For simplicity we do not react on errors here
         Task {
             movie = try await MovieDatabaseCore.shared.fetchMovieDetails(id: movieId)
-            image = await previewImage(for: movie?.backdropPath)
-            image = await optimalImage(for: movie?.backdropPath, sizeClass: horizontalSizeClass ?? .compact)
+            guard let path = movie?.backdropPath else { return }
+            if await hasCacheEntry(for: path) {
+                PINCache.shared.object(forKeyAsync: path) { _, _, obj in
+                    image = obj as? UIImage
+                }
+            } else {
+                image = await previewImage(for: path)
+                image = await optimalImage(for: path, sizeClass: horizontalSizeClass ?? .compact)
+                await addToCache(image: image, for: path)
+            }
         }
     }
 }
