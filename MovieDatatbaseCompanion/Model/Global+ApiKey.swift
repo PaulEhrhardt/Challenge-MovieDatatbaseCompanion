@@ -7,6 +7,9 @@
 
 import Foundation
 
+
+// MARK: - Globals -
+
 let apiKey: String = {
  //   let pathToProject = "/Users/ehd/Documents/Workspace/ehd/MovieDatatbaseCompanion"
     let pathToProject = "/Users/ehrpaulhardt/Documents/Workspace/ehd/MovieDatatbaseCompanion"

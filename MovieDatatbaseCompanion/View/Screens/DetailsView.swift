@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 import UIKit
 import MovieDatabaseCore
 import PINCache
@@ -15,7 +16,20 @@ import PINCache
 
 struct DetailsView: View {
 
+
+    // MARK: - Properties
+
+    @Environment(\.modelContext) private var modelContext
+    @State var isFavorite = false {
+        didSet {
+            isFavorite ? modelContext.addFavorite(id: item.id) : modelContext.deleteFavorite(id: item.id)
+        }
+    }
+
     let item: FilmItem
+
+
+    // MARK: - Lifecycle
 
     var body: some View {
         if item.isSeries {
@@ -25,6 +39,28 @@ struct DetailsView: View {
                 .background(Color(UIColor.systemGray6).ignoresSafeArea(.all))
                 .clipShape(RoundedRectangle(cornerRadius: .cornerSize))
                 .padding(.horizontal, .itemSpace)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            isFavorite.toggle()
+                        } label: {
+                            Image(systemName: isFavorite ? "star.fill" : "star")
+                                .resizable()
+                                .scaledToFit()
+                                .tint(.brandPrimary)
+                        }
+                    }
+                }
+                .onAppear {
+                    markFavoriteIfNeeded()
+                }
+        }
+    }
+
+    private func markFavoriteIfNeeded() {
+        print("found favorites: \(modelContext.allFavorites().count)")
+        for favorite in modelContext.allFavorites() where favorite.identifier == item.id {
+            isFavorite = true
         }
     }
 }
@@ -44,9 +80,12 @@ struct DetailsViewRepresentable: UIViewControllerRepresentable {
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    let movieId: Int
     @State var movie: MovieDetail?
     @State var image: UIImage?
+
+    let movieId: Int
+    let cache = PINCache.shared
+    let coreClient = MovieDatabaseCore.shared
 
 
     // MARK: - Lifecycle
@@ -79,16 +118,16 @@ struct DetailsViewRepresentable: UIViewControllerRepresentable {
     private func loadDetails() {
         // For simplicity we do not react on errors here
         Task {
-            movie = try await MovieDatabaseCore.shared.fetchMovieDetails(id: movieId)
+            movie = try await coreClient.fetchMovieDetails(id: movieId)
             guard let path = movie?.backdropPath else { return }
-            if await hasCacheEntry(for: path) {
-                PINCache.shared.object(forKeyAsync: path) { _, _, obj in
+            if await cache.hasEntry(for: path) {
+                cache.object(forKeyAsync: path) { _, _, obj in
                     image = obj as? UIImage
                 }
             } else {
                 image = await previewImage(for: path)
                 image = await optimalImage(for: path, sizeClass: horizontalSizeClass ?? .compact)
-                await addToCache(image: image, for: path)
+                await cache.add(image: image, for: path)
             }
         }
     }
@@ -99,4 +138,5 @@ struct DetailsViewRepresentable: UIViewControllerRepresentable {
 
 #Preview {
     DetailsView(item: PreviewModels.starWars.asFilmItem())
+        .modelContainer(for: Favorite.self, inMemory: true)
 }

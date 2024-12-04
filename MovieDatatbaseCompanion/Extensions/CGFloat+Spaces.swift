@@ -12,6 +12,7 @@ import Foundation
 
 extension CGFloat {
 
+    static let minTouchDimension: CGFloat = 44
     static let cornerSize: CGFloat = 8
 
     static let tinySpace: CGFloat = 4

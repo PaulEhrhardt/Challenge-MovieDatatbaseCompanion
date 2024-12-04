@@ -17,9 +17,7 @@ struct TrendingView: View {
     
     @State var viewModel = TrendingViewModel()
 
-    let columns = [
-        GridItem(.adaptive(minimum: 300))
-    ]
+    let columns = [GridItem(.adaptive(minimum: 300))]
 
 
     // MARK: - Lifecycle

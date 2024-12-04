@@ -13,7 +13,7 @@ import Foundation
 struct MenuItem: Hashable {
     
     enum `Type` {
-        case trending, search
+        case trending, search, favorite
     }
     
     let title: String
@@ -23,5 +23,6 @@ struct MenuItem: Hashable {
 
 extension MenuItem {
     static let menuItems = [MenuItem(title: "Trending Movies", symbol: "popcorn", type: .trending),
-                            MenuItem(title: "Search", symbol: "magnifyingglass", type: .search)]
+                            MenuItem(title: "Search", symbol: "magnifyingglass", type: .search),
+                            MenuItem(title: "Favorites", symbol: "star", type: .favorite)]
 }

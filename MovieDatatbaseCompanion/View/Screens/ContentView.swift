@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 
 // MARK: - ContentView -
@@ -15,10 +14,7 @@ struct ContentView: View {
     
     
     // MARK: - Properties
-    
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-    
+
     @State var selection: MenuItem? = MenuItem.menuItems.first
 
     
@@ -56,6 +52,8 @@ struct ContentView: View {
                         TrendingView()
                     case .search:
                         SearchView()
+                    case .favorite:
+                        FavoriteView()
                     }
                 }
                 .navigationTitle(selection.title)
@@ -65,24 +63,8 @@ struct ContentView: View {
             }
         }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
-    }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

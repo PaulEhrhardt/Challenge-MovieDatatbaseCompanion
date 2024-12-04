@@ -7,7 +7,6 @@
 
 import SwiftUI
 import UIKit.UIDevice
-import MovieDatabaseCore
 import PINCache
 
 
@@ -23,6 +22,7 @@ struct FilmView: View {
     @State var image: UIImage?
 
     let item: FilmItem
+    let cache = PINCache.shared
 
     
     // MARK: - Lifecycle
@@ -57,8 +57,8 @@ struct FilmView: View {
             .task {
                 guard let path = item.imagePath else { return }
 
-                if await hasCacheEntry(for: path) {
-                    PINCache.shared.object(forKeyAsync: path) { _, _, obj in
+                if await cache.hasEntry(for: path) {
+                    cache.object(forKeyAsync: path) { _, _, obj in
                         image = obj as? UIImage
                     }
                 } else {
@@ -69,7 +69,7 @@ struct FilmView: View {
                     image = await optimalImage(for: path, sizeClass: horizontalSizeClass ?? .compact)
 
                     // add the image to cache
-                    await addToCache(image: image, for: path)
+                    await cache.add(image: image, for: path)
                 }
             }
         }
