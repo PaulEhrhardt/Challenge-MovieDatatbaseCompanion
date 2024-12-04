@@ -13,9 +13,15 @@ import SwiftData
 
 @Model
 final class Favorite {
-    var identifier: Int
+    @Attribute(.unique) var identifier: Int
+    var imagePath: String?
+    var title: String
+    var overview: String
 
-    init(identifier: Int) {
+    init(identifier: Int, imagePath: String?, title: String, overview: String) {
         self.identifier = identifier
+        self.imagePath = imagePath
+        self.title = title
+        self.overview = overview
     }
 }

@@ -42,6 +42,7 @@ struct SearchView: View {
                     switch viewModel.state {
                     case .initial:
                         Text("Search for \(viewModel.searchType.description).")
+                            .foregroundColor(Color(uiColor: .tertiaryLabel))
                             .padding(.contentSpace)
                     case .loading:
                         LoadingView()

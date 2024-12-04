@@ -35,3 +35,10 @@ extension Serie {
         FilmItem(id: id, imagePath: backdropPath, title: name, overview: overview, isSeries: true)
     }
 }
+
+extension Favorite {
+
+    func asFilmItem() -> FilmItem {
+        FilmItem(id: identifier, imagePath: imagePath, title: title, overview: overview, isSeries: false)
+    }
+}

@@ -40,6 +40,8 @@ struct TrendingView: View {
                         }
                 case .failure:
                     Text("Something went wrong, please try again.")
+                        .foregroundColor(Color(uiColor: .tertiaryLabel))
+                        .padding(.contentSpace)
                 }
             }
             .padding(.top, .bigSpace)

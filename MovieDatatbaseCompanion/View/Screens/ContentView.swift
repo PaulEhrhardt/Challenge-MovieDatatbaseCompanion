@@ -60,6 +60,8 @@ struct ContentView: View {
                 .toolbarTitleDisplayMode(.large)
             } else {
                 Text("Please select a menu item.")
+                    .foregroundColor(Color(uiColor: .tertiaryLabel))
+                    .padding(.contentSpace)
             }
         }
     }

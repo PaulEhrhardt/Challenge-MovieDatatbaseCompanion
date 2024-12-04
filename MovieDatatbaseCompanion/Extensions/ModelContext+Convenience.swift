@@ -13,16 +13,23 @@ import SwiftData
 
 extension ModelContext {
 
-    func addFavorite(id: Int) {
-        let newItem = Favorite(identifier: id)
+    @MainActor
+    func addFavorite(item: FilmItem) {
+        let newItem = Favorite(identifier: item.id, imagePath: item.imagePath, title: item.title, overview: item.overview)
         self.insert(newItem)
+        try? self.save()
     }
 
-    func deleteFavorite(id: Int) {
-        let deleteItem = Favorite(identifier: id)
-        self.delete(deleteItem)
+    @MainActor
+    func deleteFavorite(item: FilmItem) {
+        for favorite in allFavorites() where favorite.identifier == item.id {
+            self.delete(favorite)
+            try? self.save()
+            break
+        }
     }
 
+    @MainActor
     func allFavorites() -> [Favorite] {
         let fetchDescriptor = FetchDescriptor<Favorite>()
         guard let favorites = try? self.fetch(fetchDescriptor) else { return [] }

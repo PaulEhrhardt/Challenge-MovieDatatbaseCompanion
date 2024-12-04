@@ -19,12 +19,8 @@ struct DetailsView: View {
 
     // MARK: - Properties
 
-    @Environment(\.modelContext) private var modelContext
-    @State var isFavorite = false {
-        didSet {
-            isFavorite ? modelContext.addFavorite(id: item.id) : modelContext.deleteFavorite(id: item.id)
-        }
-    }
+    @Environment(\.modelContext) var modelContext
+    @State var isFavorite = false
 
     let item: FilmItem
 
@@ -34,6 +30,8 @@ struct DetailsView: View {
     var body: some View {
         if item.isSeries {
             Text("Sorry, details are currently only available for movies.")
+                .foregroundColor(Color(uiColor: .tertiaryLabel))
+                .padding(.contentSpace)
         } else {
             DetailsViewRepresentable(movieId: item.id)
                 .background(Color(UIColor.systemGray6).ignoresSafeArea(.all))
@@ -43,6 +41,7 @@ struct DetailsView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             isFavorite.toggle()
+                            changeFavoriteStatus(isFavorite)
                         } label: {
                             Image(systemName: isFavorite ? "star.fill" : "star")
                                 .resizable()
@@ -55,6 +54,10 @@ struct DetailsView: View {
                     markFavoriteIfNeeded()
                 }
         }
+    }
+
+    private func changeFavoriteStatus(_ isSelected: Bool) {
+        isSelected == true ? modelContext.addFavorite(item: item) : modelContext.deleteFavorite(item: item)
     }
 
     private func markFavoriteIfNeeded() {
