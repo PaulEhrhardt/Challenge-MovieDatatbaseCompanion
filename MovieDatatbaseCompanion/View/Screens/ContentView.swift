@@ -35,7 +35,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .listRowBackground(Color(uiColor: UIColor.systemGroupedBackground))
+                    .listRowBackground(Color(uiColor: UIColor.secondarySystemBackground))
                 }
                 .background(Color(uiColor: UIColor.systemBackground))
                 .scrollContentBackground(.hidden)
