@@ -1,5 +1,5 @@
-# MovieDatatbaseCompanion
-Example client for [The Movie Database](https://www.themoviedb.org/) on GitHub for educational purposes.
+# Technical challenge: MovieDatatbaseCompanion
+iOS application using an universal framework taking care of the communication with [The Movie Database](https://www.themoviedb.org/). Result of a 40 hour technical coding challenge for the company 2coders.
 
 
 ### API Documentation
